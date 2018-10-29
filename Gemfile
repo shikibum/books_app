@@ -54,6 +54,11 @@ group :development do
   gem 'spring'
   gem 'spring-commands-rspec'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem "capistrano", "~> 3.10", require: false
+  gem "capistrano-rails", "~> 1.3", require: false
+  gem 'capistrano-rbenv' 
+	gem 'capistrano-bundler' 
+  gem 'capistrano3-puma' 
 end
 
 group :test do
