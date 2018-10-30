@@ -59,7 +59,6 @@ group :development do
   gem 'capistrano-rbenv' 
 	gem 'capistrano-bundler' 
   gem 'capistrano3-puma' 
-  gem 'listen'
 end
 
 group :test do
