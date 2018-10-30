@@ -24,7 +24,7 @@ set :pty, true
 # append :linked_files, "config/database.yml"
 
 # Default value for linked_dirs is []
-# append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system"
+append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system"
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
@@ -39,17 +39,3 @@ set :pty, true
 # set :ssh_options, verify_host_key: :secure
 
 set :linked_files, fetch(:linked_files, []).push("config/master.key")
-
-namespace :deploy do
-  Rake::Task["deploy:check:directories"].clear
-
-  namespace :check do
-    desc '(overwrite) Check shared and release directories exist'
-    task :directories do
-      on release_roles :all do
-        execute :sudo, :mkdir, '-pv', shared_path, releases_path
-        execute :sudo, :chown, '-R', "#{fetch(:user)}:#{fetch(:group)}", deploy_to
-      end
-    end
-  end
-end
