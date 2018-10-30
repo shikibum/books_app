@@ -20,6 +20,8 @@ set :deploy_to, "/var/www/books_app"
 # Default value for :pty is false
 set :pty, true
 
+set :rbenv_ruby, File.read('.ruby-version').strip
+
 # Default value for :linked_files is []
 # append :linked_files, "config/database.yml"
 
@@ -38,4 +40,15 @@ append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/syst
 # Uncomment the following to require manually verifying the host key before first deploy.
 # set :ssh_options, verify_host_key: :secure
 
-set :linked_files, fetch(:linked_files, []).push("config/master.key")
+set :linked_files, %w(config/master.key db/production.sqlite3)
+
+namespace :deploy do
+
+  desc "Initial Deploy"
+  task :initial do
+    on roles(:app) do
+      before 'deploy:restart', 'puma:start'
+      invoke 'deploy'
+    end
+  end
+end
